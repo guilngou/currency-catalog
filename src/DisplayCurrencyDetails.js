@@ -11,19 +11,20 @@ class DisplayCurrencyDetails extends Component {
   render() {
     const { history } = this.props;
     const currency = this.props.location.object;
-    const currencyAttributes = currency.attributes;
+    //const currencyAttributes = currency.attributes;
     console.log("currency :" + JSON.stringify(currency));
-    console.log("currency.attributes :" + JSON.stringify(currency.attributes));
-    console.log(
+    //console.log("currency.attributes :" + JSON.stringify(currency.attributes));
+    /*console.log(
       "Object.entries(currencyAttributes) :" +
         JSON.stringify(Object.entries(currencyAttributes))
-    );
+    );*/
+    console.log("currency.quotes.USD :" + JSON.stringify(currency.quotes.USD));
 
     return (
       <MuiThemeProvider>
         <div className="App">
           <header className="App-header">
-            <h1 className="App-title">{currency.id}</h1>
+            <h1 className="App-title">{currency.name}</h1>
             <Button
               variant="contained"
               onClick={() => {
@@ -34,9 +35,11 @@ class DisplayCurrencyDetails extends Component {
             </Button>
           </header>
           <ul>
-            {Object.entries(currencyAttributes).map((currentValue, index) => (
-              <ListItem>{currentValue[0] + ": " + currentValue[1]}</ListItem>
-            ))}
+            {Object.entries(currency)
+              .slice(1, 8)
+              .map((currentValue, index) => (
+                <ListItem>{currentValue[0] + ": " + currentValue[1]}</ListItem>
+              ))}
           </ul>
         </div>
       </MuiThemeProvider>
@@ -46,5 +49,3 @@ class DisplayCurrencyDetails extends Component {
 export const DisplayCurrencyDetailsComponent = withRouter(
   DisplayCurrencyDetails
 );
-
-//<ListItem key={currencies.toString()} value={currencies} />
