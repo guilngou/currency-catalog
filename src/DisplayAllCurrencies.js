@@ -34,6 +34,10 @@ class TablePaginationActions extends React.Component {
     this.props.onChangePage(event, this.props.page - 1);
   };
 
+  handleNumberButtonClick = event => {
+    this.props.onChangePage(event, event);
+  };
+
   handleNextButtonClick = event => {
     this.props.onChangePage(event, this.props.page + 1);
   };
@@ -47,6 +51,16 @@ class TablePaginationActions extends React.Component {
 
   render() {
     const { classes, count, page, rowsPerPage, theme } = this.props;
+
+    let pageNumbers = [];
+    for (let i = 0; i < Math.ceil(count / rowsPerPage) - 1; i++) {
+      pageNumbers.push(
+        <Button value={i} onClick={() => this.handleNumberButtonClick(i)}>
+          {i + 1}
+        </Button>
+      );
+    }
+
     return (
       <div className={classes.root}>
         <IconButton
@@ -54,36 +68,29 @@ class TablePaginationActions extends React.Component {
           disabled={page === 0}
           aria-label="First Page"
         >
-          {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
+          <FirstPageIcon />
         </IconButton>
         <IconButton
           onClick={this.handleBackButtonClick}
           disabled={page === 0}
           aria-label="Previous Page"
         >
-          {theme.direction === "rtl" ? (
-            <KeyboardArrowRight />
-          ) : (
-            <KeyboardArrowLeft />
-          )}
+          <KeyboardArrowLeft />
         </IconButton>
+        {pageNumbers}
         <IconButton
           onClick={this.handleNextButtonClick}
           disabled={page >= Math.ceil(count / rowsPerPage) - 1}
           aria-label="Next Page"
         >
-          {theme.direction === "rtl" ? (
-            <KeyboardArrowLeft />
-          ) : (
-            <KeyboardArrowRight />
-          )}
+          <KeyboardArrowRight />
         </IconButton>
         <IconButton
           onClick={this.handleLastPageButtonClick}
           disabled={page >= Math.ceil(count / rowsPerPage) - 1}
           aria-label="Last Page"
         >
-          {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
+          <LastPageIcon />
         </IconButton>
       </div>
     );
@@ -168,7 +175,9 @@ class DisplayAllCurrencies extends Component {
     const emptyRows =
       rowsPerPage -
       Math.min(rowsPerPage, currencies.length - page * rowsPerPage);
-
+    console.log(
+      "this.state.currencies.length : " + this.state.currencies.length
+    );
     return (
       <MuiThemeProvider>
         <div className="App">
