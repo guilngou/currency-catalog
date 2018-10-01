@@ -4,31 +4,25 @@ import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import currencies from "./test/currencies.json";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { DisplayAllCurrenciesComponent } from "./DisplayAllCurrencies";
+import { DisplayCurrencyDetailsComponent } from "./DisplayCurrencyDetails";
 
 class App extends Component {
   render() {
     console.log(JSON.stringify(currencies));
     return (
       <MuiThemeProvider>
-        <div className="App">
-          <header className="App-header">
-            <h1 className="App-title">Available currencies</h1>
-          </header>
-          <p className="App-intro">
-            To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
-          <Grid container spacing={24}>
-            {currencies.map((object, i) => {
-              return (
-                <Grid item xs={6} obj={object} key={i}>
-                  <Button variant="outlined">
-                    ID: {object.id} Type: {object.attributes.currency_type}{" "}
-                    Symbol: {object.attributes.symbol}
-                  </Button>
-                </Grid>
-              );
-            })}
-          </Grid>
+        <div>
+          <Router>
+            <div>
+              <Route exact path="/" component={DisplayAllCurrenciesComponent} />
+              <Route
+                path="/#/currency/:id"
+                component={DisplayCurrencyDetailsComponent}
+              />
+            </div>
+          </Router>
         </div>
       </MuiThemeProvider>
     );
