@@ -229,9 +229,13 @@ class DisplayAllCurrencies extends Component {
             <option value="symbol">symbol</option>
           </TextField>
           <Grid container spacing={8}>
-            {this.state.currenciesDisplay.slice(
-              page * rowsPerPage,
-              page * rowsPerPage + rowsPerPage
+            {!!Object.keys(this.state.currenciesDisplay).length ? (
+              this.state.currenciesDisplay.slice(
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage
+              )
+            ) : (
+              <h1>No currencies available</h1>
             )}
           </Grid>
 
