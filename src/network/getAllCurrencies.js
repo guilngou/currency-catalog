@@ -5,6 +5,6 @@ export const getAllCurrenciesMethod = async () => {
     );
     return await query.json();
   } catch (error) {
-    throw error;
+    console.error(error);
   }
 };
