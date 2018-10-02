@@ -20,6 +20,14 @@ import SearchIcon from "@material-ui/icons/Search";
 import Input from "@material-ui/core/Input";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import TextField from "@material-ui/core/TextField";
+import Responsive from "react-responsive";
+import MediaQuery from "react-responsive";
+
+const Desktop = props => <Responsive {...props} minWidth={992} />;
+const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
+const Mobile = props => <Responsive {...props} maxWidth={767} />;
+const DesktopOrTablet = props => <Responsive {...props} minWidth={768} />;
+const TabletOrMobile = props => <Responsive {...props} maxWidth={991} />;
 
 const actionsStyles = theme => ({
   root: {
@@ -117,7 +125,7 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, {
 const styles = theme => ({
   root: {
     width: "100%",
-    marginTop: theme.spacing.unit * 3
+    marginTop: theme.spacing.unit * 1
   },
   table: {
     minWidth: 500
@@ -173,7 +181,7 @@ class DisplayAllCurrencies extends Component {
     );
     const currencies = currenciesFiltered.map((currency, i) => {
       return (
-        <Grid item xs={6}>
+        <Grid item xs="auto">
           <Card>
             <Link
               to={{
@@ -200,7 +208,7 @@ class DisplayAllCurrencies extends Component {
       this.setState({ currenciesList });
       const currencies = currenciesList.map((currency, i) => {
         return (
-          <Grid item xs={6}>
+          <Grid item xs={6} sm={3} md={2}>
             <Card>
               <Link
                 to={{
@@ -234,6 +242,7 @@ class DisplayAllCurrencies extends Component {
       "this.state.currencies.slice : " +
         JSON.stringify(this.state.currenciesDisplay.slice(0, 1))
     );
+
     return (
       <MuiThemeProvider>
         <div className="App">
@@ -255,24 +264,38 @@ class DisplayAllCurrencies extends Component {
             <option value="name">name</option>
             <option value="symbol">symbol</option>
           </TextField>
-          <Grid container spacing={24}>
+          <Grid container spacing={8}>
             {this.state.currenciesDisplay.slice(
               page * rowsPerPage,
               page * rowsPerPage + rowsPerPage
             )}
           </Grid>
         </div>{" "}
-        <TablePagination
-          colSpan={3}
-          count={this.state.currenciesDisplay.length}
-          rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[10, 50, 100]}
-          page={page}
-          onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
-          ActionsComponent={TablePaginationActionsWrapped}
-          labelRowsPerPage={"Currencies per page:"}
-        />
+        <Desktop>
+          <TablePagination
+            colSpan={3}
+            count={this.state.currenciesDisplay.length}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={[10, 50, 100]}
+            page={page}
+            onChangePage={this.handleChangePage}
+            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+            ActionsComponent={TablePaginationActionsWrapped}
+            labelRowsPerPage={""}
+          />
+        </Desktop>
+        <TabletOrMobile>
+          <TablePagination
+            colSpan={3}
+            count={this.state.currenciesDisplay.length}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={[10, 50, 100]}
+            page={page}
+            onChangePage={this.handleChangePage}
+            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+            labelRowsPerPage={""}
+          />
+        </TabletOrMobile>
       </MuiThemeProvider>
     );
   }
