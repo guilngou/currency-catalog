@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-//import currencies from "./test/currencies.json";
+// eslint-disable-next-line
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import Card from "@material-ui/core/Card";
 import { getAllCurrenciesMethod } from "./getAllCurrencies";
-import Select from "@material-ui/core/Select";
 import TablePagination from "@material-ui/core/TablePagination";
 import { withStyles } from "@material-ui/core/styles";
 import FirstPageIcon from "@material-ui/icons/FirstPage";
@@ -18,15 +17,10 @@ import IconButton from "@material-ui/core/IconButton";
 import PropTypes from "prop-types";
 import SearchIcon from "@material-ui/icons/Search";
 import Input from "@material-ui/core/Input";
-import { fade } from "@material-ui/core/styles/colorManipulator";
 import TextField from "@material-ui/core/TextField";
 import Responsive from "react-responsive";
-import MediaQuery from "react-responsive";
 
 const Desktop = props => <Responsive {...props} minWidth={992} />;
-const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
-const Mobile = props => <Responsive {...props} maxWidth={767} />;
-const DesktopOrTablet = props => <Responsive {...props} minWidth={768} />;
 const TabletOrMobile = props => <Responsive {...props} maxWidth={991} />;
 
 const actionsStyles = theme => ({
@@ -62,7 +56,7 @@ class TablePaginationActions extends React.Component {
   };
 
   render() {
-    const { classes, count, page, rowsPerPage, theme } = this.props;
+    const { classes, count, page, rowsPerPage } = this.props;
 
     let pageNumbers = [];
     for (let i = 0; i < Math.ceil(count / rowsPerPage); i++) {
@@ -122,19 +116,6 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, {
   withTheme: true
 })(TablePaginationActions);
 
-const styles = theme => ({
-  root: {
-    width: "100%",
-    marginTop: theme.spacing.unit * 1
-  },
-  table: {
-    minWidth: 500
-  },
-  tableWrapper: {
-    overflowX: "auto"
-  }
-});
-
 class DisplayAllCurrencies extends Component {
   constructor() {
     super();
@@ -158,12 +139,10 @@ class DisplayAllCurrencies extends Component {
   };
 
   handleChangeSearchOption = event => {
-    //console.log("event.target.value : " + event.target.value);
     this.setState({ searchOption: event.target.value });
   };
 
   handleChangeSearchField = event => {
-    console.log("event.target.value : " + event.target.value);
     this.setState({ searchField: event.target.value });
 
     const currenciesFiltered = this.state.currenciesList.filter(
@@ -201,10 +180,8 @@ class DisplayAllCurrencies extends Component {
 
   async componentWillMount() {
     try {
-      const { rowsPerPage, page } = this.state;
       const currenciesFetch = await getAllCurrenciesMethod();
       const currenciesList = Object.values(currenciesFetch.data);
-      console.log("currenciesList[0] : " + JSON.stringify(currenciesList[0]));
       this.setState({ currenciesList });
       const currencies = currenciesList.map((currency, i) => {
         return (
@@ -230,18 +207,7 @@ class DisplayAllCurrencies extends Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const { currenciesDisplay, rowsPerPage, page } = this.state;
-    const emptyRows =
-      rowsPerPage -
-      Math.min(rowsPerPage, currenciesDisplay.length - page * rowsPerPage);
-    console.log(
-      "this.state.currencies.length : " + this.state.currenciesDisplay.length
-    );
-    console.log(
-      "this.state.currencies.slice : " +
-        JSON.stringify(this.state.currenciesDisplay.slice(0, 1))
-    );
+    const { rowsPerPage, page } = this.state;
 
     return (
       <MuiThemeProvider>
