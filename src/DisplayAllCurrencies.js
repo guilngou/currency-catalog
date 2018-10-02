@@ -200,6 +200,7 @@ class DisplayAllCurrencies extends Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
           ActionsComponent={TablePaginationActionsWrapped}
+          labelRowsPerPage={"Currencies per page:"}
         />
       </MuiThemeProvider>
     );
