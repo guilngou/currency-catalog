@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import Button from "@material-ui/core/Button";
-import { withRouter } from "react-router";
 import ListItem from "@material-ui/core/ListItem";
 
 class DisplayCurrencyDetails extends Component {

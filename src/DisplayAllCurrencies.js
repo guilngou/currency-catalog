@@ -1,24 +1,24 @@
 import React, { Component } from "react";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 // eslint-disable-next-line
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router";
-import Card from "@material-ui/core/Card";
+import Responsive from "react-responsive";
 import { getAllCurrenciesMethod } from "./getAllCurrencies";
-import TablePagination from "@material-ui/core/TablePagination";
+import PropTypes from "prop-types";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { withStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import TablePagination from "@material-ui/core/TablePagination";
 import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import IconButton from "@material-ui/core/IconButton";
-import PropTypes from "prop-types";
 import SearchIcon from "@material-ui/icons/Search";
 import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
-import Responsive from "react-responsive";
 
 const Desktop = props => <Responsive {...props} minWidth={992} />;
 const TabletOrMobile = props => <Responsive {...props} maxWidth={991} />;
@@ -169,7 +169,7 @@ class DisplayAllCurrencies extends Component {
               }}
             >
               name: {currency.name} symbol: {currency.symbol} price:{" "}
-              {currency.quotes.USD.price}$
+              {Math.round(currency.quotes.USD.price * 100000) / 100000}$
             </Link>
           </Card>
         </Grid>
@@ -194,7 +194,7 @@ class DisplayAllCurrencies extends Component {
                 }}
               >
                 name: {currency.name} symbol: {currency.symbol} price:{" "}
-                {currency.quotes.USD.price}$
+                {Math.round(currency.quotes.USD.price * 100000) / 100000}$
               </Link>
             </Card>
           </Grid>
@@ -212,9 +212,7 @@ class DisplayAllCurrencies extends Component {
     return (
       <MuiThemeProvider>
         <div className="App">
-          <header className="App-header">
-            <h1 className="App-title">Available currencies</h1>
-          </header>
+          <h1>Available currencies</h1>
           <SearchIcon />
           <Input
             placeholder="Search…"
@@ -236,32 +234,33 @@ class DisplayAllCurrencies extends Component {
               page * rowsPerPage + rowsPerPage
             )}
           </Grid>
-        </div>{" "}
-        <Desktop>
-          <TablePagination
-            colSpan={3}
-            count={this.state.currenciesDisplay.length}
-            rowsPerPage={rowsPerPage}
-            rowsPerPageOptions={[10, 50, 100]}
-            page={page}
-            onChangePage={this.handleChangePage}
-            onChangeRowsPerPage={this.handleChangeRowsPerPage}
-            ActionsComponent={TablePaginationActionsWrapped}
-            labelRowsPerPage={""}
-          />
-        </Desktop>
-        <TabletOrMobile>
-          <TablePagination
-            colSpan={3}
-            count={this.state.currenciesDisplay.length}
-            rowsPerPage={rowsPerPage}
-            rowsPerPageOptions={[10, 50, 100]}
-            page={page}
-            onChangePage={this.handleChangePage}
-            onChangeRowsPerPage={this.handleChangeRowsPerPage}
-            labelRowsPerPage={""}
-          />
-        </TabletOrMobile>
+
+          <Desktop>
+            <TablePagination
+              colSpan={3}
+              count={this.state.currenciesDisplay.length}
+              rowsPerPage={rowsPerPage}
+              rowsPerPageOptions={[10, 50, 100]}
+              page={page}
+              onChangePage={this.handleChangePage}
+              onChangeRowsPerPage={this.handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActionsWrapped}
+              labelRowsPerPage={""}
+            />
+          </Desktop>
+          <TabletOrMobile>
+            <TablePagination
+              colSpan={3}
+              count={this.state.currenciesDisplay.length}
+              rowsPerPage={rowsPerPage}
+              rowsPerPageOptions={[10, 50, 100]}
+              page={page}
+              onChangePage={this.handleChangePage}
+              onChangeRowsPerPage={this.handleChangeRowsPerPage}
+              labelRowsPerPage={""}
+            />
+          </TabletOrMobile>
+        </div>
       </MuiThemeProvider>
     );
   }
