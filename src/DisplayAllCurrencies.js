@@ -16,6 +16,10 @@ import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import IconButton from "@material-ui/core/IconButton";
 import PropTypes from "prop-types";
+import SearchIcon from "@material-ui/icons/Search";
+import Input from "@material-ui/core/Input";
+import { fade } from "@material-ui/core/styles/colorManipulator";
+import TextField from "@material-ui/core/TextField";
 
 const actionsStyles = theme => ({
   root: {
@@ -53,7 +57,7 @@ class TablePaginationActions extends React.Component {
     const { classes, count, page, rowsPerPage, theme } = this.props;
 
     let pageNumbers = [];
-    for (let i = 0; i < Math.ceil(count / rowsPerPage) - 1; i++) {
+    for (let i = 0; i < Math.ceil(count / rowsPerPage); i++) {
       pageNumbers.push(
         <Button value={i} onClick={() => this.handleNumberButtonClick(i)}>
           {i + 1}
@@ -127,9 +131,13 @@ class DisplayAllCurrencies extends Component {
   constructor() {
     super();
     this.state = {
-      currencies: [],
+      currenciesList: [],
+      currenciesFiltered: [],
+      currenciesDisplay: [],
       rowsPerPage: 10,
-      page: 0
+      page: 0,
+      searchOption: "name",
+      searchField: ""
     };
   }
 
@@ -141,11 +149,55 @@ class DisplayAllCurrencies extends Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
+  handleChangeSearchOption = event => {
+    //console.log("event.target.value : " + event.target.value);
+    this.setState({ searchOption: event.target.value });
+  };
+
+  handleChangeSearchField = event => {
+    console.log("event.target.value : " + event.target.value);
+    this.setState({ searchField: event.target.value });
+
+    const currenciesFiltered = this.state.currenciesList.filter(
+      (value, index, array) => {
+        if (this.state.searchOption === "name") {
+          return value.name
+            .toLowerCase()
+            .includes(event.target.value.toLowerCase());
+        } else {
+          return value.symbol
+            .toLowerCase()
+            .includes(event.target.value.toLowerCase());
+        }
+      }
+    );
+    const currencies = currenciesFiltered.map((currency, i) => {
+      return (
+        <Grid item xs={6}>
+          <Card>
+            <Link
+              to={{
+                pathname: `/#/currency/${currency.id}`,
+                object: currency
+              }}
+            >
+              name: {currency.name} symbol: {currency.symbol} price:{" "}
+              {currency.quotes.USD.price}$
+            </Link>
+          </Card>
+        </Grid>
+      );
+    });
+    this.setState({ currenciesDisplay: currencies });
+  };
+
   async componentWillMount() {
     try {
       const { rowsPerPage, page } = this.state;
       const currenciesFetch = await getAllCurrenciesMethod();
       const currenciesList = Object.values(currenciesFetch.data);
+      console.log("currenciesList[0] : " + JSON.stringify(currenciesList[0]));
+      this.setState({ currenciesList });
       const currencies = currenciesList.map((currency, i) => {
         return (
           <Grid item xs={6}>
@@ -163,7 +215,7 @@ class DisplayAllCurrencies extends Component {
           </Grid>
         );
       });
-      this.setState({ currencies: currencies });
+      this.setState({ currenciesDisplay: currencies });
     } catch (e) {
       console.error(e);
     }
@@ -171,12 +223,16 @@ class DisplayAllCurrencies extends Component {
 
   render() {
     const { classes } = this.props;
-    const { currencies, rowsPerPage, page } = this.state;
+    const { currenciesDisplay, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage -
-      Math.min(rowsPerPage, currencies.length - page * rowsPerPage);
+      Math.min(rowsPerPage, currenciesDisplay.length - page * rowsPerPage);
     console.log(
-      "this.state.currencies.length : " + this.state.currencies.length
+      "this.state.currencies.length : " + this.state.currenciesDisplay.length
+    );
+    console.log(
+      "this.state.currencies.slice : " +
+        JSON.stringify(this.state.currenciesDisplay.slice(0, 1))
     );
     return (
       <MuiThemeProvider>
@@ -184,8 +240,23 @@ class DisplayAllCurrencies extends Component {
           <header className="App-header">
             <h1 className="App-title">Available currencies</h1>
           </header>
+          <SearchIcon />
+          <Input
+            placeholder="Search…"
+            disableUnderline
+            value={this.state.searchField}
+            onChange={this.handleChangeSearchField}
+          />
+          <TextField
+            select
+            value={this.state.searchOption}
+            onChange={this.handleChangeSearchOption}
+          >
+            <option value="name">name</option>
+            <option value="symbol">symbol</option>
+          </TextField>
           <Grid container spacing={24}>
-            {this.state.currencies.slice(
+            {this.state.currenciesDisplay.slice(
               page * rowsPerPage,
               page * rowsPerPage + rowsPerPage
             )}
@@ -193,7 +264,7 @@ class DisplayAllCurrencies extends Component {
         </div>{" "}
         <TablePagination
           colSpan={3}
-          count={this.state.currencies.length}
+          count={this.state.currenciesDisplay.length}
           rowsPerPage={rowsPerPage}
           rowsPerPageOptions={[10, 50, 100]}
           page={page}
