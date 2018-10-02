@@ -181,7 +181,7 @@ class DisplayAllCurrencies extends Component {
     );
     const currencies = currenciesFiltered.map((currency, i) => {
       return (
-        <Grid item xs="auto">
+        <Grid item xs={6} sm={3} md={2}>
           <Card>
             <Link
               to={{
