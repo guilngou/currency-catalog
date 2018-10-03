@@ -40,18 +40,14 @@ class DisplayAllCurrencies extends Component {
 
   handleChangeSearchField = event => {
     this.setState({ searchField: event.target.value });
-
+    const checkSimilarity = value => {
+      return value.toLowerCase().includes(event.target.value.toLowerCase());
+    };
     const currenciesFiltered = this.state.currenciesList.filter(
       (value, index, array) => {
-        if (this.state.searchOption === "name") {
-          return value.name
-            .toLowerCase()
-            .includes(event.target.value.toLowerCase());
-        } else {
-          return value.symbol
-            .toLowerCase()
-            .includes(event.target.value.toLowerCase());
-        }
+        return this.state.searchOption === "name"
+          ? checkSimilarity(value.name)
+          : checkSimilarity(value.symbol);
       }
     );
     const currencies = currenciesFiltered.map((currency, i) => {
