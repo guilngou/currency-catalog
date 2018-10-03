@@ -2,7 +2,6 @@ import React, { Component } from "react";
 // eslint-disable-next-line
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router";
-import Responsive from "react-responsive";
 import { getAllCurrenciesMethod } from "./network/getAllCurrencies";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import Grid from "@material-ui/core/Grid";
@@ -12,9 +11,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
 import TablePaginationActionsWrapped from "./components/TablePaginationComponent";
-
-const Desktop = props => <Responsive {...props} minWidth={992} />;
-const TabletOrMobile = props => <Responsive {...props} maxWidth={991} />;
 
 class DisplayAllCurrencies extends Component {
   constructor() {
@@ -108,7 +104,6 @@ class DisplayAllCurrencies extends Component {
 
   render() {
     const { rowsPerPage, page } = this.state;
-
     return (
       <MuiThemeProvider>
         <div className="App">
@@ -138,32 +133,17 @@ class DisplayAllCurrencies extends Component {
               <h1>No currencies available</h1>
             )}
           </Grid>
-
-          <Desktop>
-            <TablePagination
-              colSpan={3}
-              count={this.state.currenciesDisplay.length}
-              rowsPerPage={rowsPerPage}
-              rowsPerPageOptions={[10, 50, 100]}
-              page={page}
-              onChangePage={this.handleChangePage}
-              onChangeRowsPerPage={this.handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActionsWrapped}
-              labelRowsPerPage={""}
-            />
-          </Desktop>
-          <TabletOrMobile>
-            <TablePagination
-              colSpan={3}
-              count={this.state.currenciesDisplay.length}
-              rowsPerPage={rowsPerPage}
-              rowsPerPageOptions={[10, 50, 100]}
-              page={page}
-              onChangePage={this.handleChangePage}
-              onChangeRowsPerPage={this.handleChangeRowsPerPage}
-              labelRowsPerPage={""}
-            />
-          </TabletOrMobile>
+          <TablePagination
+            colSpan={3}
+            count={this.state.currenciesDisplay.length}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={[10, 50, 100]}
+            page={page}
+            onChangePage={this.handleChangePage}
+            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+            ActionsComponent={TablePaginationActionsWrapped}
+            labelRowsPerPage={""}
+          />
         </div>
       </MuiThemeProvider>
     );

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 // eslint-disable-next-line
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Responsive from "react-responsive";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -9,6 +10,8 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import IconButton from "@material-ui/core/IconButton";
+
+const Desktop = props => <Responsive {...props} minWidth={992} />;
 
 const actionsStyles = theme => ({
   root: {
@@ -45,7 +48,7 @@ class TablePaginationActions extends Component {
   render() {
     const { classes, count, page, rowsPerPage } = this.props;
 
-    let pageNumbers = [];
+    const pageNumbers = [];
     for (let i = 0; i < Math.ceil(count / rowsPerPage); i++) {
       pageNumbers.push(
         <Button value={i} onClick={() => this.handleNumberButtonClick(i)}>
@@ -70,7 +73,7 @@ class TablePaginationActions extends Component {
         >
           <KeyboardArrowLeft />
         </IconButton>
-        {pageNumbers}
+        <Desktop>{pageNumbers}</Desktop>
         <IconButton
           onClick={this.handleNextButtonClick}
           disabled={page >= Math.ceil(count / rowsPerPage) - 1}
