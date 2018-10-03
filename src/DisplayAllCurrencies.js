@@ -75,8 +75,9 @@ class DisplayAllCurrencies extends Component {
                 pathname: `/#/currency/${currency.id}`,
                 object: currency
               }}
+              style={{ color: '#000' }}
             >
-              name: {currency.name} symbol: {currency.symbol} price:{" "}
+              name: {currency.name} symbol: {currency.symbol} price:{' '}
               {Math.round(currency.quotes.USD.price * 100000) / 100000}$
             </Link>
           </Card>
