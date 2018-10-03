@@ -17,7 +17,6 @@ class DisplayAllCurrencies extends Component {
     super();
     this.state = {
       currenciesList: [],
-      currenciesFiltered: [],
       currenciesDisplay: [],
       rowsPerPage: 10,
       page: 0,
@@ -50,7 +49,6 @@ class DisplayAllCurrencies extends Component {
           : checkSimilarity(value.symbol);
       }
     );
-    this.setState({ currenciesFiltered });
     const currenciesDisplay = this.renderCurrenciesGrids(currenciesFiltered);
     this.setState({ currenciesDisplay });
   };
