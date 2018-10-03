@@ -50,7 +50,25 @@ class DisplayAllCurrencies extends Component {
           : checkSimilarity(value.symbol);
       }
     );
-    const currencies = currenciesFiltered.map((currency, i) => {
+    this.setState({ currenciesFiltered });
+    const currenciesDisplay = this.renderCurrenciesGrids(currenciesFiltered);
+    this.setState({ currenciesDisplay });
+  };
+
+  async componentWillMount() {
+    try {
+      const currenciesFetch = await getAllCurrenciesMethod();
+      const currenciesList = Object.values(currenciesFetch.data);
+      this.setState({ currenciesList });
+      const currenciesDisplay = this.renderCurrenciesGrids(currenciesList);
+      this.setState({ currenciesDisplay });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  renderCurrenciesGrids = currenciesList => {
+    const currencies = currenciesList.map((currency, i) => {
       return (
         <Grid item xs={6} sm={3} md={2}>
           <Card>
@@ -67,36 +85,8 @@ class DisplayAllCurrencies extends Component {
         </Grid>
       );
     });
-    this.setState({ currenciesDisplay: currencies });
+    return currencies;
   };
-
-  async componentWillMount() {
-    try {
-      const currenciesFetch = await getAllCurrenciesMethod();
-      const currenciesList = Object.values(currenciesFetch.data);
-      this.setState({ currenciesList });
-      const currencies = currenciesList.map((currency, i) => {
-        return (
-          <Grid item xs={6} sm={3} md={2}>
-            <Card>
-              <Link
-                to={{
-                  pathname: `/#/currency/${currency.id}`,
-                  object: currency
-                }}
-              >
-                name: {currency.name} symbol: {currency.symbol} price:{" "}
-                {Math.round(currency.quotes.USD.price * 100000) / 100000}$
-              </Link>
-            </Card>
-          </Grid>
-        );
-      });
-      this.setState({ currenciesDisplay: currencies });
-    } catch (e) {
-      console.error(e);
-    }
-  }
 
   render() {
     const {
