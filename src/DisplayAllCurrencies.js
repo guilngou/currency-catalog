@@ -103,7 +103,13 @@ class DisplayAllCurrencies extends Component {
   }
 
   render() {
-    const { rowsPerPage, page } = this.state;
+    const {
+      rowsPerPage,
+      page,
+      searchField,
+      searchOption,
+      currenciesDisplay
+    } = this.state;
     return (
       <MuiThemeProvider>
         <div className="App">
@@ -112,20 +118,20 @@ class DisplayAllCurrencies extends Component {
           <Input
             placeholder="Search…"
             disableUnderline
-            value={this.state.searchField}
+            value={searchField}
             onChange={this.handleChangeSearchField}
           />
           <TextField
             select
-            value={this.state.searchOption}
+            value={searchOption}
             onChange={this.handleChangeSearchOption}
           >
             <option value="name">name</option>
             <option value="symbol">symbol</option>
           </TextField>
           <Grid container spacing={8}>
-            {!!Object.keys(this.state.currenciesDisplay).length ? (
-              this.state.currenciesDisplay.slice(
+            {!!Object.keys(currenciesDisplay).length ? (
+              currenciesDisplay.slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage
               )
@@ -135,7 +141,7 @@ class DisplayAllCurrencies extends Component {
           </Grid>
           <TablePagination
             colSpan={3}
-            count={this.state.currenciesDisplay.length}
+            count={currenciesDisplay.length}
             rowsPerPage={rowsPerPage}
             rowsPerPageOptions={[10, 50, 100]}
             page={page}
