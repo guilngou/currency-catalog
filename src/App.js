@@ -7,19 +7,15 @@ import { DisplayCurrencyDetailsComponent } from "./page/DisplayCurrencyDetails";
 class App extends Component {
   render() {
     return (
-      <div>
-        <Router>
-          <div>
-            <Switch>
-              <Route exact path="/" component={DisplayAllCurrenciesComponent} />
-              <Route
-                path="/#/currency/:id"
-                component={DisplayCurrencyDetailsComponent}
-              />
-            </Switch>
-          </div>
-        </Router>
-      </div>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={DisplayAllCurrenciesComponent} />
+          <Route
+            path="/#/currency/:id"
+            component={DisplayCurrencyDetailsComponent}
+          />
+        </Switch>
+      </Router>
     );
   }
 }
