@@ -2,7 +2,7 @@ import React, { Component } from "react";
 // eslint-disable-next-line
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import TablePagination from "@material-ui/core/TablePagination";
-import TablePaginationActionsWrapped from "./TablePaginationComponent";
+import TablePaginationActionsWrapped from "./TablePagination";
 
 class Footer extends Component {
   render() {
