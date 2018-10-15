@@ -8,17 +8,23 @@ class Footer extends Component {
   render() {
     const { currencies } = this.props;
     return (
-      <TablePagination
-        colSpan={3}
-        count={currencies.currenciesList.length}
-        rowsPerPage={currencies.rowsPerPage}
-        rowsPerPageOptions={[10, 50, 100]}
-        page={currencies.page}
-        onChangePage={this.props.onPageChange}
-        onChangeRowsPerPage={this.props.onRowsChange}
-        ActionsComponent={TablePaginationActionsWrapped}
-        labelRowsPerPage={""}
-      />
+      <table>
+        <tbody>
+          <tr>
+            <TablePagination
+              colSpan={3}
+              count={currencies.currenciesList.length}
+              rowsPerPage={currencies.rowsPerPage}
+              rowsPerPageOptions={[10, 50, 100]}
+              page={currencies.page}
+              onChangePage={this.props.onPageChange}
+              onChangeRowsPerPage={this.props.onRowsChange}
+              ActionsComponent={TablePaginationActionsWrapped}
+              labelRowsPerPage={""}
+            />
+          </tr>
+        </tbody>
+      </table>
     );
   }
 }
