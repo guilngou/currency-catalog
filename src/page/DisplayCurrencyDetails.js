@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router';
-import Button from '@material-ui/core/Button';
-import ListItem from '@material-ui/core/ListItem';
-import styled from 'styled-components';
+import React, { PureComponent } from "react";
+import { withRouter } from "react-router";
+import Button from "@material-ui/core/Button";
+import ListItem from "@material-ui/core/ListItem";
+import styled from "styled-components";
 
 const Header = styled.header`
   .App-header {
@@ -19,30 +19,34 @@ const Title = styled.title`
   }
 `;
 
-class DisplayCurrencyDetails extends Component {
+class DisplayCurrencyDetails extends PureComponent {
+  handleClick = () => {
+    this.props.history.push("/");
+  };
+
   render() {
-    const { history } = this.props;
     const currency = this.props.location.object;
     return (
       <div className="App">
         <Header>
           <Title className="App-title">{currency.name}</Title>
-          <Button
-            variant="contained"
-            onClick={() => {
-              history.push('/');
-            }}
-          >
+          <Button variant="contained" onClick={this.handleClick}>
             Back
           </Button>
         </Header>
         <ul>
           {Object.entries(currency)
             .slice(1, 8)
-            .map((currentValue, index) => <ListItem key={index}>{currentValue[0] + ': ' + currentValue[1]}</ListItem>)}
+            .map((currentValue, index) => (
+              <ListItem key={index}>{`${currentValue[0]}: ${
+                currentValue[1]
+              }`}</ListItem>
+            ))}
         </ul>
       </div>
     );
   }
 }
-export const DisplayCurrencyDetailsComponent = withRouter(DisplayCurrencyDetails);
+export const DisplayCurrencyDetailsComponent = withRouter(
+  DisplayCurrencyDetails
+);

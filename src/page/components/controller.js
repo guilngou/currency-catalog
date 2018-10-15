@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { getHundredCurrencies } from "../../network/getHundredCurrencies";
 
-class Controller extends Component {
+export class CurrenciesController extends Component {
   constructor() {
     super();
     this.state = {
@@ -54,4 +54,3 @@ class Controller extends Component {
     );
   }
 }
-export const CurrenciesController = Controller;

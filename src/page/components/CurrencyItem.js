@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 
-class Item extends PureComponent {
+export class CurrencyItem extends PureComponent {
   render() {
     const { currency } = this.props;
     return (
@@ -17,13 +17,12 @@ class Item extends PureComponent {
             }}
             style={{ color: "#000" }}
           >
-            name: {currency.name} symbol: {currency.symbol} price:{" "}
-            {Math.round(currency.quotes.USD.price * 100000) / 100000}$
+            name: {currency.name} symbol: {currency.symbol} price: ${Math.round(
+              currency.quotes.USD.price * 100000
+            ) / 100000}
           </Link>
         </Card>
       </Grid>
     );
   }
 }
-
-export const CurrencyItem = Item;

@@ -4,10 +4,10 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
 import Input from "@material-ui/core/Input";
 
-class Header extends PureComponent {
+export class DisplayAllCurrenciesHeader extends PureComponent {
   render() {
     return (
-      <React.Fragment>
+      <header>
         <h1>Available currencies</h1>
         <SearchIcon />
         <Input
@@ -25,9 +25,7 @@ class Header extends PureComponent {
           <option value="name">name</option>
           <option value="symbol">symbol</option>
         </select>
-      </React.Fragment>
+      </header>
     );
   }
 }
-
-export const DisplayAllCurrenciesHeader = Header;

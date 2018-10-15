@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import { CurrencyItem } from "./CurrencyItem";
 
-class CurrenciesGridComponent extends PureComponent {
+export class CurrenciesGrid extends PureComponent {
   render() {
     const { currencies } = this.props;
     return (
@@ -16,5 +16,3 @@ class CurrenciesGridComponent extends PureComponent {
     );
   }
 }
-
-export const CurrenciesGrid = CurrenciesGridComponent;

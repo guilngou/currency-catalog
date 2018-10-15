@@ -5,7 +5,7 @@ import { withRouter } from "react-router";
 import { CurrenciesController } from "./components/controller";
 import { DisplayAllCurrenciesHeader } from "./components/DisplayAllCurrenciesHeader";
 import { DisplayAllCurrenciesFooter } from "./components/DisplayAllCurrenciesFooter";
-import { Main } from "./components/CurrenciesMain";
+import { CurrenciesGrid } from "./components/CurrenciesGrid";
 
 class DisplayAllCurrencies extends Component {
   render() {
@@ -25,7 +25,7 @@ class DisplayAllCurrencies extends Component {
                 currencies={currencies}
                 onChange={onFilterChange}
               />
-              <Main
+              <CurrenciesGrid
                 currencies={currenciesList
                   .filter((value, index, array) => {
                     return searchOption === "name"
