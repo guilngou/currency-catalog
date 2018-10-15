@@ -1,16 +1,14 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component, PureComponent } from "react";
 // eslint-disable-next-line
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
-//import { getHundredCurrencies } from './network/getHundredCurrencies';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import TablePagination from '@material-ui/core/TablePagination';
-import SearchIcon from '@material-ui/icons/Search';
-import Input from '@material-ui/core/Input';
-//import TextField from '@material-ui/core/TextField';
-import TablePaginationActionsWrapped from './components/TablePaginationComponent';
-import { CurrenciesController } from './controller';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { withRouter } from "react-router";
+import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import TablePagination from "@material-ui/core/TablePagination";
+import SearchIcon from "@material-ui/icons/Search";
+import Input from "@material-ui/core/Input";
+import TablePaginationActionsWrapped from "./components/TablePaginationComponent";
+import { CurrenciesController } from "./controller";
 
 class DisplayAllCurrenciesHeader extends PureComponent {
   render() {
@@ -25,7 +23,11 @@ class DisplayAllCurrenciesHeader extends PureComponent {
           name="searchField"
           onChange={this.props.onChange}
         />
-        <select value={this.props.currencies.searchOption} name="searchOption" onChange={this.props.onChange}>
+        <select
+          value={this.props.currencies.searchOption}
+          name="searchOption"
+          onChange={this.props.onChange}
+        >
           <option value="name">name</option>
           <option value="symbol">symbol</option>
         </select>
@@ -45,9 +47,10 @@ class CurrencyItem extends PureComponent {
               pathname: `/#/currency/${currency.id}`,
               object: currency
             }}
-            style={{ color: '#000' }}
+            style={{ color: "#000" }}
           >
-            name: {currency.name} symbol: {currency.symbol} price: {Math.round(currency.quotes.USD.price * 100000) / 100000}$
+            name: {currency.name} symbol: {currency.symbol} price:{" "}
+            {Math.round(currency.quotes.USD.price * 100000) / 100000}$
           </Link>
         </Card>
       </Grid>
@@ -88,7 +91,7 @@ class DisplayAllCurrenciesFooter extends Component {
         onChangePage={this.props.onPageChange}
         onChangeRowsPerPage={this.props.onRowsChange}
         ActionsComponent={TablePaginationActionsWrapped}
-        labelRowsPerPage={''}
+        labelRowsPerPage={""}
       />
     );
   }
@@ -99,20 +102,37 @@ class DisplayAllCurrencies extends Component {
     return (
       <CurrenciesController>
         {({ onFilterChange, onRowsChange, onPageChange, ...currencies }) => {
-          const { rowsPerPage, page, searchField, searchOption, currenciesList } = currencies;
+          const {
+            rowsPerPage,
+            page,
+            searchField,
+            searchOption,
+            currenciesList
+          } = currencies;
           return (
             <React.Fragment>
-              <DisplayAllCurrenciesHeader currencies={currencies} onChange={onFilterChange} />
+              <DisplayAllCurrenciesHeader
+                currencies={currencies}
+                onChange={onFilterChange}
+              />
               <Main
                 currencies={currenciesList
                   .filter((value, index, array) => {
-                    return searchOption === 'name'
-                      ? value.name.toLowerCase().includes(searchField.toLowerCase())
-                      : value.symbol.toLowerCase().includes(searchField.toLowerCase());
+                    return searchOption === "name"
+                      ? value.name
+                          .toLowerCase()
+                          .includes(searchField.toLowerCase())
+                      : value.symbol
+                          .toLowerCase()
+                          .includes(searchField.toLowerCase());
                   })
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
               />
-              <DisplayAllCurrenciesFooter currencies={currencies} onPageChange={onPageChange} onRowsChange={onRowsChange} />
+              <DisplayAllCurrenciesFooter
+                currencies={currencies}
+                onPageChange={onPageChange}
+                onRowsChange={onRowsChange}
+              />
             </React.Fragment>
           );
         }}
