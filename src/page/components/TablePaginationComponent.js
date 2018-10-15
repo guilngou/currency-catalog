@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // eslint-disable-next-line
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import Responsive from 'react-responsive';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import IconButton from '@material-ui/core/IconButton';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Responsive from "react-responsive";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import FirstPageIcon from "@material-ui/icons/FirstPage";
+import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import LastPageIcon from "@material-ui/icons/LastPage";
+import IconButton from "@material-ui/core/IconButton";
 
 const Desktop = props => <Responsive {...props} minWidth={992} />;
 
@@ -32,12 +32,10 @@ class TablePaginationActions extends Component {
   };
 
   handleFirstPageButtonClick = event => {
-    console.log('this.props: ' + JSON.stringify(this.props));
     this.props.onChangePage(event, 0);
   };
 
   handleBackButtonClick = event => {
-    console.log('this.props: ' + JSON.stringify(this.props));
     this.props.onChangePage(event, this.props.page - 1);
   };
 
@@ -46,13 +44,15 @@ class TablePaginationActions extends Component {
   };
 
   handleNextButtonClick = event => {
-    console.log('this.props: ' + JSON.stringify(this.props));
     this.props.onChangePage(event, this.props.page + 1);
   };
 
   handleLastPageButtonClick = event => {
-    console.log('this.props: ' + JSON.stringify(this.props));
-    this.props.onChangePage(event, Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1));
+    console.log("this.props: " + JSON.stringify(this.props));
+    this.props.onChangePage(
+      event,
+      Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1)
+    );
   };
 
   render() {
@@ -61,7 +61,11 @@ class TablePaginationActions extends Component {
     const pageNumbers = [];
     for (let i = 0; i < Math.ceil(count / rowsPerPage); i++) {
       pageNumbers.push(
-        <Button value={i} key={i} onClick={() => this.handleNumberButtonClick(i)}>
+        <Button
+          value={i}
+          key={i}
+          onClick={() => this.handleNumberButtonClick(i)}
+        >
           {i + 1}
         </Button>
       );
@@ -69,17 +73,33 @@ class TablePaginationActions extends Component {
 
     return (
       <div className={classes.root}>
-        <IconButton onClick={this.handleFirstPageButtonClick} disabled={page === 0} aria-label="First Page">
+        <IconButton
+          onClick={this.handleFirstPageButtonClick}
+          disabled={page === 0}
+          aria-label="First Page"
+        >
           <FirstPageIcon />
         </IconButton>
-        <IconButton onClick={this.handleBackButtonClick} disabled={page === 0} aria-label="Previous Page">
+        <IconButton
+          onClick={this.handleBackButtonClick}
+          disabled={page === 0}
+          aria-label="Previous Page"
+        >
           <KeyboardArrowLeft />
         </IconButton>
         <Desktop>{pageNumbers}</Desktop>
-        <IconButton onClick={this.handleNextButtonClick} disabled={page >= Math.ceil(count / rowsPerPage) - 1} aria-label="Next Page">
+        <IconButton
+          onClick={this.handleNextButtonClick}
+          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+          aria-label="Next Page"
+        >
           <KeyboardArrowRight />
         </IconButton>
-        <IconButton onClick={this.handleLastPageButtonClick} disabled={page >= Math.ceil(count / rowsPerPage) - 1} aria-label="Last Page">
+        <IconButton
+          onClick={this.handleLastPageButtonClick}
+          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+          aria-label="Last Page"
+        >
           <LastPageIcon />
         </IconButton>
       </div>

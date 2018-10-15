@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getHundredCurrencies } from "./network/getHundredCurrencies";
+import { getHundredCurrencies } from "../../network/getHundredCurrencies";
 
 class Controller extends Component {
   constructor() {
